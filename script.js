@@ -337,7 +337,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "image/webp",
     "image/gif",
   ];
-  const MAX_FILE_SIZE = 3 * 1024 * 1024;
+  const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
   function sanitizeInput(str) {
     if (typeof str !== "string") return "";
@@ -444,7 +444,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
       if (file.size > MAX_FILE_SIZE) {
-        showStatus("Image is too large (max 3 MB).", "error");
+        showStatus("Image is too large (max 5 MB).", "error");
         clearImageFile();
         return;
       }
@@ -571,22 +571,16 @@ document.addEventListener("DOMContentLoaded", () => {
           );
           submitBtn.disabled = false;
           submitBtn.innerHTML = `
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-            </svg>
-            <span>Send Report</span>
+            <span>Send</span>
           `;
           return;
         }
 
         if (imageFile.size > MAX_FILE_SIZE) {
-          showStatus("Image is too large (max 3 MB).", "error");
+          showStatus("Image is too large (max 5 MB).", "error");
           submitBtn.disabled = false;
           submitBtn.innerHTML = `
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-            </svg>
-            <span>Send Report</span>
+            <span>Send</span>
           `;
           return;
         }
@@ -602,10 +596,7 @@ document.addEventListener("DOMContentLoaded", () => {
           showStatus("Failed to read image file.", "error");
           submitBtn.disabled = false;
           submitBtn.innerHTML = `
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-            </svg>
-            <span>Send Report</span>
+            <span>Send</span>
           `;
         };
 
