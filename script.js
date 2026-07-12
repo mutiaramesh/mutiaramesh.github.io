@@ -337,7 +337,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "image/webp",
     "image/gif",
   ];
-  const MAX_FILE_SIZE = 3 * 1024 * 1024; 
+  const MAX_FILE_SIZE = 3 * 1024 * 1024;
 
   function sanitizeInput(str) {
     if (typeof str !== "string") return "";
