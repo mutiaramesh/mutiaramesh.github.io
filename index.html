@@ -9,7 +9,6 @@
       content="MutiaraMesh is Penang's community-driven decentralized communication network powered by Meshtastic. Explore our router infrastructure and join the mesh."
     />
 
-    <!-- Preconnect and Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -17,10 +16,8 @@
       rel="stylesheet"
     />
 
-    <!-- Compiled Tailwind CSS stylesheet -->
     <link rel="stylesheet" href="style.css" />
 
-    <!-- Leaflet CSS -->
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -31,7 +28,6 @@
   <body
     class="bg-neutral-950 font-sans text-neutral-300 antialiased selection:bg-emerald-500 selection:text-neutral-950 min-h-screen relative overflow-x-hidden"
   >
-    <!-- Background Fluid Liquid Blobs -->
     <div
       class="fixed inset-0 -z-50 bg-[#040805] overflow-hidden"
       aria-hidden="true"
@@ -47,7 +43,6 @@
       ></div>
     </div>
 
-    <!-- Navigation -->
     <header class="sticky top-0 z-50 bg-neutral-950/60 backdrop-blur-xl">
       <div
         class="relative z-50 max-w-6xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between"
@@ -58,7 +53,6 @@
           >
         </a>
 
-        <!-- Desktop Navigation -->
         <nav class="hidden sm:flex items-center space-x-4 md:space-x-8">
           <a
             href="#about"
@@ -89,7 +83,6 @@
           >
             Join Channel
           </a>
-          <!-- Mobile Menu Button -->
           <button
             id="mobileMenuBtn"
             class="sm:hidden p-2 text-neutral-400 hover:text-emerald-400 transition-colors cursor-pointer"
@@ -131,7 +124,6 @@
         </div>
       </div>
 
-      <!-- Mobile Navigation Overlay -->
       <div
         id="mobileMenu"
         class="fixed inset-0 z-40 sm:hidden bg-neutral-950/90 backdrop-blur-2xl flex flex-col items-center justify-center pointer-events-none"
@@ -161,14 +153,12 @@
       </div>
     </header>
 
-    <!-- Hero Section -->
     <section
       class="relative pt-10 pb-14 sm:pt-16 sm:pb-20 lg:pt-24 lg:pb-28 max-w-6xl mx-auto px-5 sm:px-8"
     >
       <div
         class="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-12 lg:gap-16 items-center"
       >
-        <!-- Hero Content -->
         <div class="space-y-5 sm:space-y-6 text-center lg:text-left">
           <h1
             class="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] tracking-tight text-white leading-[1.1]"
@@ -216,7 +206,6 @@
             </a>
           </div>
         </div>
-        <!-- Hero Image -->
         <div class="flex justify-center">
           <div class="relative w-full max-w-sm sm:max-w-md lg:max-w-lg">
             <div
@@ -237,13 +226,11 @@
       </div>
     </section>
 
-    <!-- What is Meshtastic + Mission -->
     <section
       id="about"
       class="py-12 sm:py-16 scroll-mt-20 max-w-6xl mx-auto px-5 sm:px-8"
     >
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-10 lg:gap-16 items-start">
-        <!-- What is Meshtastic -->
         <div class="space-y-4">
           <h2 class="font-display font-bold text-2xl sm:text-3xl text-white">
             What is Meshtastic?
@@ -264,7 +251,6 @@
           </a>
         </div>
 
-        <!-- Our Mission -->
         <div class="space-y-6">
           <div class="space-y-4">
             <h2 class="font-display font-bold text-2xl sm:text-3xl text-white">
@@ -281,13 +267,11 @@
       </div>
     </section>
 
-    <!-- Mesh Map Section -->
     <section
       id="map-section"
       class="py-14 sm:py-20 scroll-mt-20 max-w-6xl mx-auto px-5 sm:px-8"
     >
       <div class="space-y-6 sm:space-y-8">
-        <!-- Section Header & Stats -->
         <div
           class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5 sm:gap-6"
         >
@@ -307,7 +291,6 @@
             </p>
           </div>
 
-          <!-- Live Stats -->
           <div
             class="grid grid-cols-3 gap-3 sm:gap-4 bg-white/[0.03] p-3 sm:p-4 rounded-2xl w-full sm:w-auto sm:min-w-[340px]"
           >
@@ -344,13 +327,11 @@
           </div>
         </div>
 
-        <!-- Map Container -->
         <div
           class="relative h-[320px] sm:h-[450px] md:h-[520px] lg:h-[580px] rounded-2xl bg-neutral-900/30 overflow-hidden shadow-2xl shadow-black/20"
         >
           <div id="map" class="w-full h-full z-10"></div>
 
-          <!-- Fallback (shown when JS fails or Leaflet doesn't load) -->
           <div
             id="map-fallback"
             class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center z-20 bg-neutral-950/90 transition-all duration-300"
@@ -381,15 +362,13 @@
               Penang Router Map
             </h3>
             <p class="text-neutral-400 max-w-sm text-sm mb-4">
-              The interactive map requires JavaScript. View our router locations
-              on OpenStreetMap instead.
+              The interactive map requires JavaScript.
             </p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Local Channel Section -->
     <section id="channel" class="py-14 sm:py-20 scroll-mt-20">
       <div class="max-w-6xl mx-auto px-5 sm:px-8">
         <div class="p-6 sm:p-8 lg:p-12">
@@ -408,7 +387,6 @@
                 Copy the channel link and paste it into your Meshtastic app to
                 auto-import all settings.
               </p>
-              <!-- JS-powered copy button -->
               <div class="js-only">
                 <button
                   id="copyChannelBtnBody"
@@ -433,7 +411,6 @@
               </div>
             </div>
 
-            <!-- Channel Specs (fully static, works without JS) -->
             <div class="bg-neutral-950/40 rounded-2xl p-5 sm:p-6 space-y-4">
               <h3
                 class="font-display font-bold text-white text-base sm:text-lg"
@@ -479,7 +456,7 @@
               <p
                 class="text-[11px] sm:text-xs text-neutral-500 text-center pt-1"
               >
-                Conforms to Malaysian LoRa standard (AS923/MY915).
+                Conforms to Malaysian LoRa standard (MY915).
               </p>
             </div>
           </div>
@@ -487,7 +464,6 @@
       </div>
     </section>
 
-    <!-- Community Showcase (fully static, no JS needed) -->
     <section
       id="showcase"
       class="py-14 sm:py-20 scroll-mt-20 max-w-6xl mx-auto px-5 sm:px-8"
@@ -508,7 +484,6 @@
       <div
         class="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6 max-w-4xl mx-auto"
       >
-        <!-- Card 1 -->
         <div
           class="group bg-white/[0.03] rounded-2xl overflow-hidden hover:bg-white/[0.05] transition-all duration-300 shadow-lg shadow-black/10"
         >
@@ -543,7 +518,6 @@
           </div>
         </div>
 
-        <!-- Card 2 -->
         <div
           class="group bg-white/[0.03] rounded-2xl overflow-hidden hover:bg-white/[0.05] transition-all duration-300 shadow-lg shadow-black/10"
         >
@@ -580,7 +554,6 @@
       </div>
     </section>
 
-    <!-- Contact / Photo Section -->
     <section
       id="contact"
       class="py-16 sm:py-24 scroll-mt-20 max-w-3xl mx-auto px-5 sm:px-8"
@@ -588,7 +561,6 @@
       <div
         class="relative bg-neutral-900/40 backdrop-blur-xl border border-white/5 rounded-3xl p-6 sm:p-10 lg:p-12 overflow-hidden shadow-[0_24px_60px_-15px_rgba(0,0,0,0.7)]"
       >
-        <!-- Ambient background blur effects -->
         <div
           class="absolute -top-40 -right-40 w-80 h-80 bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none"
         ></div>
@@ -596,12 +568,10 @@
           class="absolute -bottom-40 -left-40 w-80 h-80 bg-teal-500/5 rounded-full blur-[120px] pointer-events-none"
         ></div>
 
-        <!-- Tech Grid background overlay -->
         <div
           class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.007)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.007)_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none opacity-40"
         ></div>
 
-        <!-- Section Header -->
         <div class="relative text-center space-y-3 mb-8 sm:mb-10">
           <h2
             class="font-display font-extrabold text-3xl sm:text-4xl text-white tracking-tight leading-tight"
@@ -619,9 +589,7 @@
           </p>
         </div>
 
-        <!-- Form -->
         <form id="reportForm" class="relative space-y-5">
-          <!-- Name & Contact grid -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div class="space-y-1.5">
               <label
@@ -630,24 +598,6 @@
                 >Name</label
               >
               <div class="relative">
-                <div
-                  class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-neutral-500"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                    />
-                  </svg>
-                </div>
                 <input
                   type="text"
                   id="name"
@@ -668,24 +618,6 @@
                 >Contact</label
               >
               <div class="relative">
-                <div
-                  class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-neutral-500"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                    />
-                  </svg>
-                </div>
                 <input
                   type="text"
                   id="contactInput"
@@ -708,24 +640,6 @@
               >Message</label
             >
             <div class="relative">
-              <div
-                class="absolute top-3.5 left-3.5 pointer-events-none text-neutral-500"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"
-                  />
-                </svg>
-              </div>
               <textarea
                 id="message"
                 name="message"
@@ -738,7 +652,6 @@
             </div>
           </div>
 
-          <!-- Drag & Drop Photo Upload Zone -->
           <div class="space-y-1.5">
             <label
               class="block text-xs font-semibold uppercase tracking-wider text-neutral-400"
@@ -752,7 +665,6 @@
               id="dropZone"
               class="relative group cursor-pointer border border-dashed border-white/10 hover:border-emerald-400/40 bg-white/[0.01] hover:bg-emerald-500/[0.01] rounded-2xl p-6 transition-all duration-300 flex flex-col items-center justify-center text-center"
             >
-              <!-- Hidden native file input -->
               <input
                 type="file"
                 id="image"
@@ -776,7 +688,6 @@
                 </p>
               </div>
 
-              <!-- Preview wrapper -->
               <div
                 id="previewWrapper"
                 class="hidden relative z-20 w-full max-w-xs mx-auto"
@@ -820,7 +731,6 @@
             </div>
           </div>
 
-          <!-- Submit & Status Bar -->
           <div
             class="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4"
           >
@@ -840,7 +750,6 @@
           </div>
         </form>
 
-        <!-- No-JS fallback: direct Telegram link -->
         <noscript>
           <div
             class="mt-6 pt-4 text-sm text-neutral-400 leading-relaxed text-center space-y-3 border-t border-white/5"
@@ -851,7 +760,6 @@
       </div>
     </section>
 
-    <!-- Footer (fully static) -->
     <footer class="py-8 sm:py-12">
       <div
         class="max-w-6xl mx-auto px-5 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4"
@@ -875,14 +783,12 @@
       </div>
     </footer>
 
-    <!-- Leaflet Javascript -->
     <script
       src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
       crossorigin=""
     ></script>
 
-    <!-- Interactive logic file -->
     <script src="script.js"></script>
   </body>
 </html>
