@@ -522,7 +522,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const sendPayload = async () => {
         try {
           const response = await fetch(
-            "https://mutiaramesh.vercel.app/report",
+            "https://mutiaramesh.surgelee69.workers.dev/report",
             {
               method: "POST",
               headers: {
