@@ -8,23 +8,43 @@
       name="description"
       content="MutiaraMesh is Penang's community-driven decentralized communication network powered by Meshtastic. Explore our router infrastructure and join the mesh."
     />
-    <meta name="google-site-verification" content="DGT_lMgj4c5ApI48RXWFFtohKEWHkevUmnaZR4AxGn8" />
+    <meta
+      name="google-site-verification"
+      content="DGT_lMgj4c5ApI48RXWFFtohKEWHkevUmnaZR4AxGn8"
+    />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://unpkg.com" />
+    <link rel="preconnect" href="https://mutiaramesh.vercel.app" />
+    <link rel="preconnect" href="https://mutiaramesh.surgelee69.workers.dev" />
+    <link rel="preconnect" href="https://a.basemaps.cartocdn.com" />
+    <link rel="preconnect" href="https://b.basemaps.cartocdn.com" />
+    <link rel="preconnect" href="https://c.basemaps.cartocdn.com" />
+    <link rel="preconnect" href="https://d.basemaps.cartocdn.com" />
+
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+    <link rel="dns-prefetch" href="https://unpkg.com" />
+    <link rel="dns-prefetch" href="https://mutiaramesh.vercel.app" />
+    <link
+      rel="dns-prefetch"
+      href="https://mutiaramesh.surgelee69.workers.dev"
+    />
+
+    <link
+      rel="preload"
+      href="meshtastic_router_node.webp"
+      as="image"
+      type="image/webp"
+    />
+
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
 
     <link rel="stylesheet" href="style.css" />
-
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-      crossorigin=""
-    />
   </head>
   <body
     class="bg-neutral-950 font-sans text-neutral-300 antialiased selection:bg-emerald-500 selection:text-neutral-950 min-h-screen relative overflow-x-hidden"
@@ -215,12 +235,20 @@
             <div
               class="overflow-hidden rounded-2xl bg-neutral-900/40 shadow-2xl shadow-black/30"
             >
-              <img
-                src="meshtastic_router_node.jpg"
-                alt="MutiaraMesh Solar Router Node in Penang"
-                class="w-full h-56 sm:h-72 md:h-80 lg:h-96 object-cover"
-                loading="eager"
-              />
+              <picture>
+                <source
+                  srcset="meshtastic_router_node.webp"
+                  type="image/webp"
+                />
+                <img
+                  src="meshtastic_router_node.jpg"
+                  alt="MutiaraMesh Solar Router Node in Penang"
+                  class="w-full h-56 sm:h-72 md:h-80 lg:h-96 object-cover"
+                  loading="eager"
+                  width="1376"
+                  height="768"
+                />
+              </picture>
             </div>
           </div>
         </div>
@@ -795,12 +823,6 @@
         </p>
       </div>
     </footer>
-
-    <script
-      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-      crossorigin=""
-    ></script>
 
     <script src="script.js"></script>
   </body>
