@@ -2519,3 +2519,418 @@ header.menu-open #mobileMenuBtn #menuIconClose {
     opacity: 0.5;
   }
 }
+
+/* Custom Showcase Carousel and Tinder Stack styles */
+#carousel-track {
+  display: flex;
+  gap: 1.5rem; /* 24px */
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform;
+}
+
+#carousel-track > * {
+  flex: 0 0 100%;
+  box-sizing: border-box;
+}
+
+@media (min-width: 640px) {
+  #carousel-track > * {
+    flex: 0 0 calc((100% - 1.5rem) / 2);
+  }
+}
+
+@media (min-width: 1024px) {
+  #carousel-track > * {
+    flex: 0 0 calc((100% - 3rem) / 3);
+  }
+}
+
+.carousel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: oklch(37.1% 0 0); /* --color-neutral-700 */
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.carousel-dot.active {
+  background-color: oklch(76.5% 0.177 163.223); /* --color-emerald-400 */
+  width: 24px;
+  border-radius: 4px;
+}
+
+/* Tinder Deck Mobile styles */
+
+/* ══════════════════════════════════════════════════
+   Showcase Carousel
+   – Uses CSS Grid + scroll-snap for reliable alignment
+   – Polished with skeletons, smooth transitions & animations
+   ══════════════════════════════════════════════════ */
+
+/* ── Fade-in & Shimmer animations ── */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* ── Wrapper ── */
+#sc-wrapper {
+  position: relative;
+  /* mobile full-bleed carousel */
+  margin-left: -1.25rem; /* -20px */
+  margin-right: -1.25rem; /* -20px */
+}
+
+/* ── Scrollable track ── */
+.sc-track {
+  display: grid;
+  grid-auto-flow: column;
+  /* mobile: active card centered, showing 8% peek of prev/next card */
+  grid-auto-columns: 84%;
+  column-gap: 16px;
+
+  overflow-x: auto;
+  overflow-y: visible;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+  scroll-padding-left: 8%; /* align snap with padding */
+  padding-left: 8%;
+  padding-right: 8%;
+  padding-bottom: 8px; /* prevent bottom clip */
+}
+.sc-track::-webkit-scrollbar {
+  display: none;
+}
+
+/* tablet: 2-up  (50% - half of 1 gap = 50% - 10px) */
+@media (min-width: 640px) {
+  .sc-track {
+    grid-auto-columns: calc(50% - 10px);
+    column-gap: 20px;
+    padding-left: 0;
+    padding-right: 0;
+    scroll-padding-left: 0;
+    padding-bottom: 8px;
+  }
+  #sc-wrapper {
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0 64px; /* room for nav buttons with comfortable gap */
+  }
+}
+
+/* desktop: 3-up  (33.333% - 2/3 of 1 gap ≈ 33.333% - 13.333px) */
+@media (min-width: 1024px) {
+  .sc-track {
+    grid-auto-columns: calc(33.333% - 13.334px);
+    column-gap: 20px;
+  }
+}
+
+/* ── Cards ── */
+.sc-card {
+  scroll-snap-align: center; /* center snap on mobile */
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.015);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  min-width: 0; /* prevent grid blowout */
+  height: 100%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+@media (min-width: 640px) {
+  .sc-card {
+    scroll-snap-align: start; /* start snap on tablet/desktop */
+  }
+}
+
+.sc-card.fade-in {
+  animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+
+.sc-card:hover {
+  background: rgba(255, 255, 255, 0.035);
+  border-color: rgba(16, 185, 129, 0.3);
+  transform: translateY(-4px);
+  box-shadow:
+    0 20px 40px -15px rgba(0, 0, 0, 0.6),
+    0 0 15px rgba(16, 185, 129, 0.05);
+}
+
+/* ── Card image ── */
+.sc-card-img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #0d0d0d;
+  flex-shrink: 0;
+}
+.sc-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center; /* center and crop portrait/landscape images */
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+  pointer-events: none;
+}
+.sc-card:hover .sc-card-img img {
+  transform: scale(1.05);
+}
+
+/* ── Card body ── */
+.sc-card-body {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.625rem;
+}
+
+/* header row */
+.sc-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.sc-card-title {
+  font-family: "Outfit", sans-serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+}
+.sc-card-tag {
+  font-family: monospace;
+  font-size: 0.68rem;
+  color: #6ee7b7;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.18);
+  padding: 2px 8px;
+  border-radius: 6px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* description */
+.sc-card-desc {
+  font-size: 0.85rem;
+  color: #a3a3a3;
+  line-height: 1.6;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* meta row */
+.sc-card-meta {
+  font-size: 0.75rem;
+  color: #737373;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  margin-top: auto;
+}
+.sc-card-meta > span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sc-meta-sep {
+  flex-shrink: 0;
+  color: #404040;
+}
+
+/* ── Nav buttons ── */
+.sc-nav-btn {
+  display: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(10, 10, 10, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sc-nav-btn:hover {
+  background: rgba(16, 185, 129, 0.12);
+  border-color: rgba(16, 185, 129, 0.4);
+  color: #34d399;
+  transform: translateY(-50%) scale(1.08);
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+}
+
+.sc-nav-btn:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.sc-nav-btn:disabled {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sc-prev {
+  left: 10px;
+}
+.sc-next {
+  right: 10px;
+}
+
+@media (min-width: 640px) {
+  .sc-nav-btn {
+    display: flex;
+  }
+}
+
+/* ── Dot indicators ── */
+.sc-dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 24px;
+}
+.sc-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.18);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition:
+    width 0.3s ease,
+    background 0.3s ease;
+  flex-shrink: 0;
+}
+.sc-dot.active {
+  width: 22px;
+  background: #34d399;
+}
+
+/* ── Skeleton loaders ── */
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.02) 25%,
+    rgba(255, 255, 255, 0.08) 37%,
+    rgba(255, 255, 255, 0.02) 63%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite linear;
+}
+
+.sc-card.skeleton {
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0.015);
+  border-color: rgba(255, 255, 255, 0.04);
+}
+
+.sc-card.skeleton .sc-card-img {
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.skeleton-title {
+  width: 60%;
+  height: 16px;
+  border-radius: 4px;
+}
+
+.skeleton-tag {
+  width: 46px;
+  height: 20px;
+  border-radius: 6px;
+}
+
+.skeleton-desc-1,
+.skeleton-desc-2,
+.skeleton-desc-3 {
+  height: 12px;
+  border-radius: 4px;
+}
+
+.skeleton-desc-1 {
+  width: 100%;
+  margin-top: 4px;
+}
+
+.skeleton-desc-2 {
+  width: 90%;
+}
+
+.skeleton-desc-3 {
+  width: 65%;
+}
+
+.skeleton-meta-loc,
+.skeleton-meta-dev {
+  height: 10px;
+  border-radius: 3px;
+}
+
+.skeleton-meta-loc {
+  width: 70px;
+}
+
+.skeleton-meta-dev {
+  width: 55px;
+}
+
+/* Empty State */
+.sc-empty {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 4rem 0;
+  color: #737373;
+  font-size: 0.9rem;
+  min-width: 100%;
+}
+
+/* ══════════════════════════════════════════════════
+   End Showcase Carousel
+   ══════════════════════════════════════════════════ */
