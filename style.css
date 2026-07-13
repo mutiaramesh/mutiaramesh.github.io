@@ -2611,18 +2611,18 @@ header.menu-open #mobileMenuBtn #menuIconClose {
 .sc-track {
   display: grid;
   grid-auto-flow: column;
-  /* mobile: active card centered, showing 8% peek of prev/next card */
-  grid-auto-columns: 84%;
-  column-gap: 16px;
+  /* mobile: wider card filling most of the viewport, subtle peek of adjacent cards */
+  grid-auto-columns: 92%;
+  column-gap: 12px;
 
   overflow-x: auto;
   overflow-y: visible;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none; /* Firefox */
-  scroll-padding-left: 8%; /* align snap with padding */
-  padding-left: 8%;
-  padding-right: 8%;
+  scroll-padding-left: 4%; /* align snap with padding */
+  padding-left: 4%;
+  padding-right: 4%;
   padding-bottom: 8px; /* prevent bottom clip */
 }
 .sc-track::-webkit-scrollbar {
@@ -2661,7 +2661,7 @@ header.menu-open #mobileMenuBtn #menuIconClose {
   flex-direction: column;
   background: rgba(255, 255, 255, 0.015);
   border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 20px;
+  border-radius: 16px;
   overflow: hidden;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   min-width: 0; /* prevent grid blowout */
@@ -2671,6 +2671,7 @@ header.menu-open #mobileMenuBtn #menuIconClose {
 
 @media (min-width: 640px) {
   .sc-card {
+    border-radius: 20px;
     scroll-snap-align: start; /* start snap on tablet/desktop */
   }
 }
@@ -2713,11 +2714,18 @@ header.menu-open #mobileMenuBtn #menuIconClose {
 
 /* ── Card body ── */
 .sc-card-body {
-  padding: 1.25rem;
+  padding: 0.875rem 1rem;
   display: flex;
   flex-direction: column;
   flex: 1;
-  gap: 0.625rem;
+  gap: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .sc-card-body {
+    padding: 1.25rem;
+    gap: 0.625rem;
+  }
 }
 
 /* header row */
