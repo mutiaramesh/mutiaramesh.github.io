@@ -44,6 +44,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   let map;
+  let mapInitialized = false;
+  let cachedRouterData = null;
   const markersMap = new Map();
   const mapContainer = document.getElementById("map");
   const mapFallback = document.getElementById("map-fallback");
@@ -52,8 +54,42 @@ document.addEventListener("DOMContentLoaded", () => {
   const statAvgBattery = document.getElementById("stat-avg-battery");
   const statActive = document.getElementById("stat-active");
 
-  if (typeof L !== "undefined" && mapContainer) {
+  function loadLeaflet() {
+    return Promise.all([
+      new Promise((resolve, reject) => {
+        if (document.querySelector('link[href*="leaflet.css"]'))
+          return resolve();
+        const link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
+        link.integrity = "sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=";
+        link.crossOrigin = "";
+        link.onload = resolve;
+        link.onerror = reject;
+        document.head.appendChild(link);
+      }),
+      new Promise((resolve, reject) => {
+        if (typeof L !== "undefined") return resolve();
+        const script = document.createElement("script");
+        script.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
+        script.integrity =
+          "sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=";
+        script.crossOrigin = "";
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+      }),
+    ]);
+  }
+
+  async function initMap() {
+    if (mapInitialized) return;
+    if (!mapContainer) return;
+
     try {
+      await loadLeaflet();
+      if (typeof L === "undefined") return;
+
       const penangBounds = L.latLngBounds([5.12, 100.08], [5.6, 100.52]);
 
       map = L.map("map", {
@@ -81,9 +117,34 @@ document.addEventListener("DOMContentLoaded", () => {
       if (mapFallback) {
         mapFallback.style.display = "none";
       }
+
+      mapInitialized = true;
+
+      if (cachedRouterData) {
+        renderNodesMarkers(cachedRouterData);
+      }
     } catch (e) {
       console.error("Leaflet initialization failed: ", e);
     }
+  }
+
+  if (mapContainer && typeof IntersectionObserver !== "undefined") {
+    const mapObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            initMap();
+            mapObserver.disconnect();
+          }
+        });
+      },
+      {
+        rootMargin: "600px 0px", 
+      },
+    );
+    mapObserver.observe(mapContainer);
+  } else {
+    initMap();
   }
 
   function escapeHtml(str) {
@@ -138,7 +199,11 @@ document.addEventListener("DOMContentLoaded", () => {
           lastUpdatedEl.textContent = `Last Updated: ${lastUpdatedAgo}`;
         }
         updateNetworkStatistics(result.data);
-        renderNodesMarkers(result.data);
+
+        cachedRouterData = result.data;
+        if (mapInitialized) {
+          renderNodesMarkers(result.data);
+        }
       } else {
         throw new Error("Invalid response format");
       }
@@ -400,6 +465,18 @@ document.addEventListener("DOMContentLoaded", () => {
       }, 150);
     });
 
+    function preloadShowcaseImages(items) {
+      if (!items || !items.length) return;
+      items.forEach(function (item) {
+        var img = new Image();
+        img.src =
+          "https://mutiaramesh.surgelee69.workers.dev/img/" +
+          item.fileId +
+          "/" +
+          item.cdnID;
+      });
+    }
+
     function buildCard(item, index) {
       var el = document.createElement("div");
       el.className = "sc-card fade-in";
@@ -418,7 +495,7 @@ document.addEventListener("DOMContentLoaded", () => {
         src +
         '" alt="' +
         escapeHtml(item.title) +
-        '" loading="lazy">' +
+        '">' +
         "</div>" +
         '<div class="sc-card-body">' +
         '<div class="sc-card-header">' +
@@ -505,44 +582,28 @@ document.addEventListener("DOMContentLoaded", () => {
         data = Array.isArray(d) && d.length ? d : [];
         if (!data.length) throw new Error("empty");
       })
-      .catch(function () {
-        data = [
-          {
-            title: "George Town Balcony",
-            shortName: "a5c8",
-            description:
-              "Heltec V3 on a Gurney balcony, bridging Pearl Hill to ground-level nodes.",
-            device: "Heltec V3",
-            location: "George Town",
-            cdnID: "019f5acc-f2bf-7f89-a9c0-a740dca11d53",
-            fileId:
-              "AgACAgUAAyEGAATqvOkVAAIQlWpUP45603kmlQq3yfWxNoDpHodnAALfD2sbTYqpViNrPdndS795AQADAgADdwADPAQ",
-          },
-          {
-            title: "Mobile Hiking Node",
-            shortName: "f38b",
-            description:
-              "LilyGO T-Echo clipped to a backpack for off-grid messaging on Penang Hill trails.",
-            device: "LilyGO T-Echo",
-            location: "Penang Hill",
-            cdnID: "019f5ace-e155-78a1-8655-ea884521b48f",
-            fileId:
-              "AgACAgUAAyEFAATqvOkVAAIPe2pUr9KpUt7DRsyBUW2WEtuIffN1AAIOEWsbyd2YVivDojLJxqb_AQADAgADdwADPAQ",
-          },
-          {
-            title: "Meshtastic Router",
-            shortName: "b12f",
-            description:
-              "RAK WisBlock router on a rooftop in Air Itam, providing wide hilltop coverage.",
-            device: "RAK WisBlock",
-            location: "Air Itam",
-            cdnID: "019f5acc-f2bf-7f89-a9c0-a740dca11d53",
-            fileId:
-              "AgACAgUAAyEGAATqvOkVAAIQlWpUP45603kmlQq3yfWxNoDpHodnAALfD2sbTYqpViNrPdndS795AQADAgADdwADPAQ",
-          },
-        ];
-      })
-      .then(render);
+      .catch(function () {})
+      .then(function () {
+        preloadShowcaseImages(data);
+        if (wrap && typeof IntersectionObserver !== "undefined") {
+          var observer = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                  render();
+                  observer.disconnect();
+                }
+              });
+            },
+            {
+              rootMargin: "600px 0px", 
+            },
+          );
+          observer.observe(wrap);
+        } else {
+          render();
+        }
+      });
   })();
 
   const inviteUrl =
