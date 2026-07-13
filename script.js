@@ -500,8 +500,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function buildCard(item, index) {
-      var el = document.createElement("div");
+      var hasUrl = item.url && item.url.trim();
+      var el = document.createElement(hasUrl ? "a" : "div");
       el.className = "sc-card fade-in";
+      if (hasUrl) {
+        el.href = item.url;
+        el.target = "_blank";
+        el.rel = "noopener noreferrer";
+      }
       if (index !== undefined) {
         el.style.animationDelay = index * 0.08 + "s";
         el.style.opacity = "0";
@@ -511,6 +517,15 @@ document.addEventListener("DOMContentLoaded", () => {
         escapeHtml(item.fileId) +
         "/" +
         escapeHtml(item.cdnID);
+      var linkIcon = hasUrl
+        ? '<span class="sc-card-link-icon" aria-label="Open link">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14">' +
+          '<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>' +
+          '<polyline points="15 3 21 3 21 9"></polyline>' +
+          '<line x1="10" y1="14" x2="21" y2="3"></line>' +
+          "</svg>" +
+          "</span>"
+        : "";
       el.innerHTML =
         '<div class="sc-card-img">' +
         '<img src="' +
@@ -518,6 +533,7 @@ document.addEventListener("DOMContentLoaded", () => {
         '" alt="' +
         escapeHtml(item.title) +
         '">' +
+        linkIcon +
         "</div>" +
         '<div class="sc-card-body">' +
         '<div class="sc-card-header">' +

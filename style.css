@@ -2692,11 +2692,47 @@ header.menu-open #mobileMenuBtn #menuIconClose {
 
 /* ── Card image ── */
 .sc-card-img {
+  position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
   overflow: hidden;
   background: #0d0d0d;
   flex-shrink: 0;
+}
+
+/* ── Clickable card (anchor) ── */
+a.sc-card {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ── Link icon badge ── */
+.sc-card-link-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.7);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none; /* let clicks pass through to the card */
+}
+a.sc-card:hover .sc-card-link-icon {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: rgba(16, 185, 129, 0.5);
+  color: #6ee7b7;
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.25);
 }
 .sc-card-img img {
   width: 100%;
