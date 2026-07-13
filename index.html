@@ -468,90 +468,103 @@
       id="showcase"
       class="py-14 sm:py-20 scroll-mt-20 max-w-6xl mx-auto px-5 sm:px-8"
     >
-      <div
-        class="text-center max-w-lg mx-auto space-y-2 sm:space-y-3 mb-8 sm:mb-12"
-      >
+      <div class="text-center max-w-lg mx-auto mb-10 sm:mb-14 space-y-3">
         <h2
           class="font-display font-bold text-2xl sm:text-3xl lg:text-4xl text-white"
         >
           Built by Penangites
         </h2>
-        <p class="text-neutral-400 text-sm sm:text-[15px] leading-relaxed">
+        <p class="text-neutral-400 text-sm sm:text-[15px] leading-relaxed mb-4">
           Nodes custom-built and deployed by local operators across the island.
         </p>
       </div>
 
-      <div
-        class="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6 max-w-4xl mx-auto"
-      >
-        <div
-          class="group bg-white/[0.03] rounded-2xl overflow-hidden hover:bg-white/[0.05] transition-all duration-300 shadow-lg shadow-black/10"
-        >
-          <img
-            src="georgetown_balcony_node.jpg"
-            alt="DIY Node in George Town Balcony"
-            class="w-full h-40 sm:h-44 md:h-48 object-cover group-hover:scale-[1.02] transition-transform duration-500"
-            loading="lazy"
-            width="600"
-            height="400"
-          />
-          <div class="p-4 sm:p-5 space-y-2">
-            <div class="flex items-center justify-between">
-              <h3
-                class="font-display font-bold text-sm sm:text-base text-white"
-              >
-                George Town Balcony
-              </h3>
-              <span class="font-mono text-xs text-emerald-400/70">a5c8</span>
+      <div id="sc-wrapper" class="relative">
+        <div id="sc-track" class="sc-track">
+          <div class="sc-card skeleton">
+            <div class="sc-card-img skeleton-shimmer"></div>
+            <div class="sc-card-body">
+              <div class="sc-card-header">
+                <div class="skeleton-shimmer skeleton-title"></div>
+                <div class="skeleton-shimmer skeleton-tag"></div>
+              </div>
+              <div class="skeleton-shimmer skeleton-desc-1"></div>
+              <div class="skeleton-shimmer skeleton-desc-2"></div>
+              <div class="skeleton-shimmer skeleton-desc-3"></div>
+              <div class="sc-card-meta">
+                <div class="skeleton-shimmer skeleton-meta-loc"></div>
+                <span class="sc-meta-sep">·</span>
+                <div class="skeleton-shimmer skeleton-meta-dev"></div>
+              </div>
             </div>
-            <p class="text-sm text-neutral-400 leading-relaxed">
-              Heltec V3 on a Gurney balcony, bridging Pearl Hill to ground-level
-              nodes.
-            </p>
-            <div
-              class="text-xs text-neutral-500 flex items-center space-x-2 pt-1"
-            >
-              <span>George Town</span>
-              <span class="text-neutral-700">·</span>
-              <span>Heltec V3</span>
+          </div>
+          <div class="sc-card skeleton">
+            <div class="sc-card-img skeleton-shimmer"></div>
+            <div class="sc-card-body">
+              <div class="sc-card-header">
+                <div class="skeleton-shimmer skeleton-title"></div>
+                <div class="skeleton-shimmer skeleton-tag"></div>
+              </div>
+              <div class="skeleton-shimmer skeleton-desc-1"></div>
+              <div class="skeleton-shimmer skeleton-desc-2"></div>
+              <div class="skeleton-shimmer skeleton-desc-3"></div>
+              <div class="sc-card-meta">
+                <div class="skeleton-shimmer skeleton-meta-loc"></div>
+                <span class="sc-meta-sep">·</span>
+                <div class="skeleton-shimmer skeleton-meta-dev"></div>
+              </div>
+            </div>
+          </div>
+          <div class="sc-card skeleton">
+            <div class="sc-card-img skeleton-shimmer"></div>
+            <div class="sc-card-body">
+              <div class="sc-card-header">
+                <div class="skeleton-shimmer skeleton-title"></div>
+                <div class="skeleton-shimmer skeleton-tag"></div>
+              </div>
+              <div class="skeleton-shimmer skeleton-desc-1"></div>
+              <div class="skeleton-shimmer skeleton-desc-2"></div>
+              <div class="skeleton-shimmer skeleton-desc-3"></div>
+              <div class="sc-card-meta">
+                <div class="skeleton-shimmer skeleton-meta-loc"></div>
+                <span class="sc-meta-sep">·</span>
+                <div class="skeleton-shimmer skeleton-meta-dev"></div>
+              </div>
             </div>
           </div>
         </div>
 
-        <div
-          class="group bg-white/[0.03] rounded-2xl overflow-hidden hover:bg-white/[0.05] transition-all duration-300 shadow-lg shadow-black/10"
-        >
-          <img
-            src="penang_hiking_node.jpg"
-            alt="Mobile Hiking Node on Penang Hill"
-            class="w-full h-40 sm:h-44 md:h-48 object-cover group-hover:scale-[1.02] transition-transform duration-500"
-            loading="lazy"
-            width="600"
-            height="400"
-          />
-          <div class="p-4 sm:p-5 space-y-2">
-            <div class="flex items-center justify-between">
-              <h3
-                class="font-display font-bold text-sm sm:text-base text-white"
-              >
-                Mobile Hiking Node
-              </h3>
-              <span class="font-mono text-xs text-emerald-400/70">f38b</span>
-            </div>
-            <p class="text-sm text-neutral-400 leading-relaxed">
-              LilyGO T-Echo clipped to a backpack for off-grid messaging on
-              Penang Hill trails.
-            </p>
-            <div
-              class="text-xs text-neutral-500 flex items-center space-x-2 pt-1"
-            >
-              <span>Penang Hill</span>
-              <span class="text-neutral-700">·</span>
-              <span>LilyGO T-Echo</span>
-            </div>
-          </div>
-        </div>
+        <button id="sc-prev" class="sc-nav-btn sc-prev" aria-label="Previous">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            width="20"
+            height="20"
+          >
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <button id="sc-next" class="sc-nav-btn sc-next" aria-label="Next">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            width="20"
+            height="20"
+          >
+            <polyline points="9 6 15 12 9 18"></polyline>
+          </svg>
+        </button>
       </div>
+
+      <div id="sc-dots" class="sc-dots"></div>
     </section>
 
     <section
@@ -632,7 +645,6 @@
             </div>
           </div>
 
-          <!-- Message -->
           <div class="space-y-1.5">
             <label
               for="message"
