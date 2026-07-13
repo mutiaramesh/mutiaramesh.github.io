@@ -261,6 +261,290 @@ document.addEventListener("DOMContentLoaded", () => {
 
   fetchRouters();
 
+  (function () {
+    var data = [];
+    var autoT = null;
+
+    var track = document.getElementById("sc-track");
+    var prev = document.getElementById("sc-prev");
+    var next = document.getElementById("sc-next");
+    var dots = document.getElementById("sc-dots");
+    var wrap = document.getElementById("sc-wrapper");
+
+    if (!track) return;
+
+    function cardW() {
+      var first = track.querySelector(".sc-card");
+      if (!first) return track.clientWidth || 0;
+      return first.getBoundingClientRect().width;
+    }
+
+    function gapPx() {
+      var g = parseInt(getComputedStyle(track).columnGap, 10);
+      return isNaN(g) ? 20 : g;
+    }
+
+    function stepPx() {
+      return Math.round(cardW() + gapPx());
+    }
+
+    function curIdx() {
+      var s = stepPx();
+      return s > 0 ? Math.round(track.scrollLeft / s) : 0;
+    }
+
+    function maxIdx() {
+      var s = stepPx();
+      if (!s) return 0;
+      return Math.max(
+        0,
+        Math.round((track.scrollWidth - track.clientWidth + 1) / s),
+      );
+    }
+
+    function renderDots() {
+      if (!dots) return;
+      var max = maxIdx();
+      var cur = curIdx();
+      dots.innerHTML = "";
+      if (max <= 0) {
+        dots.style.display = "none";
+        return;
+      }
+      dots.style.display = "flex";
+      for (var i = 0; i <= max; i++) {
+        (function (idx) {
+          var b = document.createElement("button");
+          b.className = "sc-dot" + (idx === cur ? " active" : "");
+          b.setAttribute("aria-label", "Slide " + (idx + 1));
+          b.addEventListener("click", function () {
+            track.scrollTo({ left: idx * stepPx(), behavior: "smooth" });
+            restartAuto();
+          });
+          dots.appendChild(b);
+        })(i);
+      }
+    }
+
+    function updateNav() {
+      var cur = curIdx();
+      var max = maxIdx();
+      if (prev) {
+        prev.disabled = cur <= 0;
+        prev.style.display = max <= 0 ? "none" : "";
+      }
+      if (next) {
+        next.disabled = cur >= max;
+        next.style.display = max <= 0 ? "none" : "";
+      }
+    }
+
+    function startAuto() {
+      stopAuto();
+      if (maxIdx() <= 0) return;
+      if (window.innerWidth < 640) return; // mobile: touch only
+      autoT = setInterval(function () {
+        var cur = curIdx();
+        var max = maxIdx();
+        var target = cur >= max ? 0 : cur + 1;
+        track.scrollTo({ left: target * stepPx(), behavior: "smooth" });
+      }, 4000);
+    }
+    function stopAuto() {
+      if (autoT) {
+        clearInterval(autoT);
+        autoT = null;
+      }
+    }
+    function restartAuto() {
+      stopAuto();
+      startAuto();
+    }
+
+    var raf;
+    track.addEventListener(
+      "scroll",
+      function () {
+        cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(function () {
+          renderDots();
+          updateNav();
+        });
+      },
+      { passive: true },
+    );
+
+    if (prev)
+      prev.addEventListener("click", function () {
+        track.scrollBy({ left: -stepPx(), behavior: "smooth" });
+        restartAuto();
+      });
+    if (next)
+      next.addEventListener("click", function () {
+        track.scrollBy({ left: stepPx(), behavior: "smooth" });
+        restartAuto();
+      });
+
+    if (wrap) {
+      wrap.addEventListener("mouseenter", stopAuto);
+      wrap.addEventListener("mouseleave", startAuto);
+    }
+
+    var resizeT;
+    window.addEventListener("resize", function () {
+      clearTimeout(resizeT);
+      resizeT = setTimeout(function () {
+        renderDots();
+        updateNav();
+        restartAuto();
+      }, 150);
+    });
+
+    function buildCard(item, index) {
+      var el = document.createElement("div");
+      el.className = "sc-card fade-in";
+      if (index !== undefined) {
+        el.style.animationDelay = index * 0.08 + "s";
+        el.style.opacity = "0";
+      }
+      var src =
+        "https://mutiaramesh.surgelee69.workers.dev/img/" +
+        escapeHtml(item.fileId) +
+        "/" +
+        escapeHtml(item.cdnID);
+      el.innerHTML =
+        '<div class="sc-card-img">' +
+        '<img src="' +
+        src +
+        '" alt="' +
+        escapeHtml(item.title) +
+        '" loading="lazy">' +
+        "</div>" +
+        '<div class="sc-card-body">' +
+        '<div class="sc-card-header">' +
+        '<h3 class="sc-card-title">' +
+        escapeHtml(item.title) +
+        "</h3>" +
+        '<span class="sc-card-tag">' +
+        escapeHtml(item.shortName) +
+        "</span>" +
+        "</div>" +
+        '<p class="sc-card-desc">' +
+        escapeHtml(item.description) +
+        "</p>" +
+        '<div class="sc-card-meta">' +
+        "<span>" +
+        escapeHtml(item.location) +
+        "</span>" +
+        '<span class="sc-meta-sep">·</span>' +
+        "<span>" +
+        escapeHtml(item.device) +
+        "</span>" +
+        "</div>" +
+        "</div>";
+      return el;
+    }
+
+    function buildSkeletonCard() {
+      var el = document.createElement("div");
+      el.className = "sc-card skeleton";
+      el.innerHTML =
+        '<div class="sc-card-img skeleton-shimmer"></div>' +
+        '<div class="sc-card-body">' +
+        '<div class="sc-card-header">' +
+        '<div class="skeleton-shimmer skeleton-title"></div>' +
+        '<div class="skeleton-shimmer skeleton-tag"></div>' +
+        "</div>" +
+        '<div class="skeleton-shimmer skeleton-desc-1"></div>' +
+        '<div class="skeleton-shimmer skeleton-desc-2"></div>' +
+        '<div class="skeleton-shimmer skeleton-desc-3"></div>' +
+        '<div class="sc-card-meta">' +
+        '<div class="skeleton-shimmer skeleton-meta-loc"></div>' +
+        '<span class="sc-meta-sep">·</span>' +
+        '<div class="skeleton-shimmer skeleton-meta-dev"></div>' +
+        "</div>" +
+        "</div>";
+      return el;
+    }
+
+    function showSkeletons() {
+      track.innerHTML = "";
+      for (var i = 0; i < 3; i++) {
+        track.appendChild(buildSkeletonCard());
+      }
+    }
+
+    function render() {
+      track.innerHTML = "";
+      if (!data.length) {
+        track.innerHTML = '<div class="sc-empty">No custom nodes found.</div>';
+        return;
+      }
+      data.forEach(function (item, idx) {
+        track.appendChild(buildCard(item, idx));
+      });
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          renderDots();
+          updateNav();
+          startAuto();
+        });
+      });
+    }
+
+    if (!track.querySelector(".skeleton")) {
+      showSkeletons();
+    }
+
+    fetch("https://mutiaramesh.vercel.app/showcase")
+      .then(function (r) {
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        return r.json();
+      })
+      .then(function (d) {
+        data = Array.isArray(d) && d.length ? d : [];
+        if (!data.length) throw new Error("empty");
+      })
+      .catch(function () {
+        data = [
+          {
+            title: "George Town Balcony",
+            shortName: "a5c8",
+            description:
+              "Heltec V3 on a Gurney balcony, bridging Pearl Hill to ground-level nodes.",
+            device: "Heltec V3",
+            location: "George Town",
+            cdnID: "019f5acc-f2bf-7f89-a9c0-a740dca11d53",
+            fileId:
+              "AgACAgUAAyEGAATqvOkVAAIQlWpUP45603kmlQq3yfWxNoDpHodnAALfD2sbTYqpViNrPdndS795AQADAgADdwADPAQ",
+          },
+          {
+            title: "Mobile Hiking Node",
+            shortName: "f38b",
+            description:
+              "LilyGO T-Echo clipped to a backpack for off-grid messaging on Penang Hill trails.",
+            device: "LilyGO T-Echo",
+            location: "Penang Hill",
+            cdnID: "019f5ace-e155-78a1-8655-ea884521b48f",
+            fileId:
+              "AgACAgUAAyEFAATqvOkVAAIPe2pUr9KpUt7DRsyBUW2WEtuIffN1AAIOEWsbyd2YVivDojLJxqb_AQADAgADdwADPAQ",
+          },
+          {
+            title: "Meshtastic Router",
+            shortName: "b12f",
+            description:
+              "RAK WisBlock router on a rooftop in Air Itam, providing wide hilltop coverage.",
+            device: "RAK WisBlock",
+            location: "Air Itam",
+            cdnID: "019f5acc-f2bf-7f89-a9c0-a740dca11d53",
+            fileId:
+              "AgACAgUAAyEGAATqvOkVAAIQlWpUP45603kmlQq3yfWxNoDpHodnAALfD2sbTYqpViNrPdndS795AQADAgADdwADPAQ",
+          },
+        ];
+      })
+      .then(render);
+  })();
+
   const inviteUrl =
     "https://meshtastic.org/e/?add=true#CjMSINdl0ChJsFPmHHd9_dbwsZC9yAnksgaTBRvFSWK72EuKGgtNdXRpYXJhTWVzaDoCCCASGggBEAQY-gEgCygFOBFAB0gBUBtYCWgByAYB";
 
