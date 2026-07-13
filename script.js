@@ -29,8 +29,8 @@ document.addEventListener("DOMContentLoaded", () => {
       toggleMenu();
     });
 
-    const mobileNavLinks = mobileMenu.querySelectorAll(".mobile-nav-link");
-    mobileNavLinks.forEach((link) => {
+    const links = document.querySelectorAll("header a, #mobileMenu a");
+    links.forEach((link) => {
       link.addEventListener("click", () => {
         toggleMenu(false);
       });
@@ -41,6 +41,28 @@ document.addEventListener("DOMContentLoaded", () => {
         toggleMenu(false);
       }
     });
+
+    mobileMenu.addEventListener(
+      "touchmove",
+      (e) => {
+        if (mobileMenu.classList.contains("is-active")) {
+          e.preventDefault();
+        }
+      },
+      { passive: false },
+    );
+
+    const mql = window.matchMedia("(min-width: 640px)");
+    const handleViewportChange = (e) => {
+      if (e.matches && mobileMenu.classList.contains("is-active")) {
+        toggleMenu(false);
+      }
+    };
+    if (mql.addEventListener) {
+      mql.addEventListener("change", handleViewportChange);
+    } else if (mql.addListener) {
+      mql.addListener(handleViewportChange);
+    }
   }
 
   let map;
@@ -139,7 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       },
       {
-        rootMargin: "600px 0px", 
+        rootMargin: "600px 0px",
       },
     );
     mapObserver.observe(mapContainer);
@@ -596,7 +618,7 @@ document.addEventListener("DOMContentLoaded", () => {
               });
             },
             {
-              rootMargin: "600px 0px", 
+              rootMargin: "600px 0px",
             },
           );
           observer.observe(wrap);

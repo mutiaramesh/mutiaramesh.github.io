@@ -2173,49 +2173,59 @@ body {
   opacity: 0;
   pointer-events: none;
   visibility: hidden;
+  -webkit-backdrop-filter: blur(40px);
+  backdrop-filter: blur(40px);
   transition:
-    opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-    backdrop-filter 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-    visibility 0.4s;
+    opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0s linear 0.2s;
+  will-change: opacity;
 }
 #mobileMenu.is-active {
   opacity: 1;
   pointer-events: auto;
   visibility: visible;
+  transition:
+    opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0s linear 0s;
 }
 #mobileMenu nav a {
   opacity: 0;
   transition:
-    opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
     letter-spacing 0.3s,
     color 0.2s;
-  transform: translateY(30px);
+  transform: translate3d(0, 20px, 0);
+  will-change: transform, opacity;
 }
 #mobileMenu.is-active nav a {
   opacity: 1;
-  transform: translateY(0);
+  transform: translate3d(0, 0, 0);
+  transition:
+    opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    letter-spacing 0.3s,
+    color 0.2s;
 }
 #mobileMenu.is-active nav a:first-child {
-  transition-delay: 80ms;
+  transition-delay: 50ms;
 }
 #mobileMenu.is-active nav a:nth-child(2) {
-  transition-delay: 0.14s;
+  transition-delay: 100ms;
 }
 #mobileMenu.is-active nav a:nth-child(3) {
-  transition-delay: 0.2s;
+  transition-delay: 150ms;
 }
 #mobileMenu.is-active nav a:nth-child(4) {
-  transition-delay: 0.26s;
+  transition-delay: 200ms;
 }
 header {
-  transition:
-    background-color 0.4s,
-    backdrop-filter 0.4s;
+  transition: background-color 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 header.menu-open {
   backdrop-filter: none !important;
-  background-color: #0000 !important;
+  -webkit-backdrop-filter: none !important;
+  background-color: transparent !important;
 }
 #mobileMenuBtn {
   justify-content: center;
